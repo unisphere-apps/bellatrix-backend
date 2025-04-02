@@ -8,7 +8,7 @@ class Auth {
         $authHeader = $headers['Authorization'] ?? null;
 
         if (!$authHeader || substr($authHeader, 0, 7) !== "Bearer ") {
-            Response::json(["error" => "Token manquant ou mal formé"], 401);
+            Response::json(["error" => "Accès refusé."], 401);
         }
 
         $token = trim(str_replace("Bearer", "", $authHeader));
