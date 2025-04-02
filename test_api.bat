@@ -9,20 +9,24 @@ set PASSWORD=root
 echo 🔐 Test de connexion à l'API...
 
 :: LOGIN
-for /f "tokens=*" %%i in ('curl -s -X POST %BASE_URL%/login -H "Content-Type: application/json" -d "{\"email\":\"%EMAIL%\", \"password\":\"%PASSWORD%\"}"') do set RESPONSE=%%i
+curl -s -X POST %BASE_URL%/login -H "Content-Type: application/json" -d "{\"email\":\"%EMAIL%\", \"password\":\"%PASSWORD%\"}" > login_response.txt
 
-echo %RESPONSE% | findstr /i "token" >nul
-if errorlevel 1 (
-    echo ❌ Login échoué : %RESPONSE%
+:: Lire et extraire le token
+set TOKEN=
+for /f "tokens=1,2 delims=:" %%A in ('findstr "token" login_response.txt') do (
+    set "RAW_TOKEN=%%B"
+    set "TOKEN=!RAW_TOKEN:"=!"
+)
+
+if not defined TOKEN (
+    echo ❌ Login échoué
+    type login_response.txt
+    del login_response.txt
     exit /b 1
 )
 
-for /f "tokens=2 delims=:" %%a in ('echo %RESPONSE% ^| findstr /i "token"') do (
-    set "TOKEN=%%a"
-)
-set TOKEN=%TOKEN:"=%
-
-echo ✅ Login OK - Token : %TOKEN%
+echo ✅ Login OK - Token: %TOKEN%
+del login_response.txt
 
 :: TEST GET /activites
 echo.

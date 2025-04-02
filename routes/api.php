@@ -1,13 +1,11 @@
 <?php
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
-require_once '../core/Auth.php';
-Auth::check();
 
 // Nettoyage du chemin selon la structure locale
-$uri = str_replace("/bellatrix-backend/public", "", $uri); // adapter si besoin
+$uri = str_replace("/bellatrix-backend/public", "", $uri); // à adapter selon ton chemin réel
 
-// === ROUTES PUBLIQUES (pas besoin de token) ===
+// === ROUTES PUBLIQUES (PAS besoin de token) ===
 if ($uri === "/login" && $method === 'POST') {
     require_once '../controllers/AuthController.php';
     $controller = new AuthController();
@@ -22,9 +20,9 @@ if ($uri === "/register" && $method === 'POST') {
     exit;
 }
 
-// ✅ Toutes les autres routes sont protégées
+// === ROUTES PROTÉGÉES : on vérifie le token ===
 require_once '../core/Auth.php';
-Auth::check(); // Stoppe ici si token invalide
+Auth::check();
 
 // === ACTIVITÉS ===
 if ($uri === "/activites" && $method === 'GET') {
@@ -63,6 +61,6 @@ else {
     http_response_code(404);
     echo json_encode([
         "error" => "Route non trouvée",
-        "uri" => $uri // debug utile
+        "uri" => $uri
     ]);
 }
