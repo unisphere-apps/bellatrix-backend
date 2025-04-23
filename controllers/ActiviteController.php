@@ -8,4 +8,10 @@ class ActiviteController {
         $data = $activite->getAll();
         Response::json($data);
     }
+
+    public function getActiviteById($id) {
+        $activite = new Activite();
+        $data = $activite->getActiviteById($id);
+        Response::json($data);
+    }
 }

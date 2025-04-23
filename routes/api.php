@@ -29,6 +29,12 @@ if ($uri === "/activites" && $method === 'GET') {
     require_once '../controllers/ActiviteController.php';
     $controller = new ActiviteController();
     $controller->getAll();
+} 
+
+elseif (preg_match("#^/activites/(\d+)$#", $uri, $matches) && $method === 'GET') {
+    require_once '../controllers/ActiviteController.php';
+    $controller = new ActiviteController();
+    $controller->getActiviteById($matches[1]);
 }
 
 // === RÉSERVATIONS ===
@@ -36,19 +42,19 @@ elseif ($uri === "/reservations" && $method === 'GET') {
     require_once '../controllers/ReservationController.php';
     $controller = new ReservationController();
     $controller->getAll();
-}
+} 
 
 elseif ($uri === "/reservations" && $method === 'POST') {
     require_once '../controllers/ReservationController.php';
     $controller = new ReservationController();
     $controller->create();
-}
+} 
 
 elseif (preg_match("#^/reservations/user/(\d+)$#", $uri, $matches) && $method === 'GET') {
     require_once '../controllers/ReservationController.php';
     $controller = new ReservationController();
     $controller->getByUser($matches[1]);
-}
+} 
 
 elseif (preg_match("#^/reservations/(\d+)$#", $uri, $matches) && $method === 'DELETE') {
     require_once '../controllers/ReservationController.php';
