@@ -1,4 +1,4 @@
-```markdown
+
 # 📘 Bellatrix API – Documentation
 
 API de gestion des activités et réservations, avec système d'authentification basé sur token.
@@ -7,9 +7,7 @@ API de gestion des activités et réservations, avec système d'authentification
 
 ## 🌐 Base URL
 
-```
 http://localhost/bellatrix-backend/public
-```
 
 Toutes les routes suivantes sont relatives à cette URL.
 
