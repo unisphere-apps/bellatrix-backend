@@ -37,6 +37,12 @@ elseif (preg_match("#^/activites/(\d+)$#", $uri, $matches) && $method === 'GET')
     $controller->getActiviteById($matches[1]);
 }
 
+elseif ($uri === "/activites" && $method === 'POST') {
+    require_once '../controllers/ActiviteController.php';
+    $controller = new ActiviteController();
+    $controller->create(); // ⬅️ appelle la méthode qu'on a ajoutée dans le contrôleur
+}
+
 // === RÉSERVATIONS ===
 elseif ($uri === "/reservations" && $method === 'GET') {
     require_once '../controllers/ReservationController.php';
