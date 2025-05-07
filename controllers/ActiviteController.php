@@ -18,7 +18,7 @@ class ActiviteController
         Response::json($data);
     }
 
-    // Création d'une nouvelle activité
+    // 🔨 Création d'une nouvelle activité
     public function create()
     {
         try {
@@ -47,6 +47,19 @@ class ActiviteController
             }
         } catch (Exception $e) {
             Response::json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    // 🗑️ Suppression d'une activité
+    public function delete($id)
+    {
+        $activite = new Activite();
+        $success = $activite->delete($id);
+
+        if ($success) {
+            Response::json(['success' => true]);
+        } else {
+            Response::json(['error' => 'Suppression échouée'], 500);
         }
     }
 }

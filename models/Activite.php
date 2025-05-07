@@ -48,5 +48,13 @@ class Activite {
         $stmt->bindParam(':organisateur_id', $organisateurId, PDO::PARAM_INT);
     
         return $stmt->execute();
-    }      
+    }
+    
+    public function delete($id) {
+        $query = "DELETE FROM bel_activites WHERE id_activite = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    
 }

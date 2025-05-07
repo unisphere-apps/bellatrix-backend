@@ -40,8 +40,15 @@ elseif (preg_match("#^/activites/(\d+)$#", $uri, $matches) && $method === 'GET')
 elseif ($uri === "/activites" && $method === 'POST') {
     require_once '../controllers/ActiviteController.php';
     $controller = new ActiviteController();
-    $controller->create(); // ⬅️ appelle la méthode qu'on a ajoutée dans le contrôleur
+    $controller->create();
 }
+
+elseif (preg_match("#^/activites/(\d+)$#", $uri, $matches) && $method === 'DELETE') {
+    require_once '../controllers/ActiviteController.php';
+    $controller = new ActiviteController();
+    $controller->delete($matches[1]);
+}
+
 
 // === RÉSERVATIONS ===
 elseif ($uri === "/reservations" && $method === 'GET') {
